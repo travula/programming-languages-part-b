@@ -86,7 +86,7 @@
 
 ;;; this is the syntactic equivalent version of double4
 ;;; but the resilts are different, since racket rewrites the
-;;; variables withing the scope of the macro not to conflict with
+;;; variables within the scope of the macro not to conflict with
 ;;; anything in the program
 (let ([zero 17])
   (let* ([zero 0]

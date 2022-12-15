@@ -230,6 +230,90 @@ The macros should be wary of:
          [tl 1])
 	 hd)
    ```
+   
+## Hygiene
+
+There are two parts to macro hygiene
+
+1. Free variable in the use of macro ends up in the scope of a
+   variable in the macro definition.
+   
+   ```
+   (define-syntax double4
+    (syntax-rules ()
+      [(double4 e)
+       (let* [(zero 0)
+              [x e]]
+         (+ x x zero))]))
+   ```
+   
+   This is the definition of macro `double4`.  This macro is used this
+   way.
+   
+   ```
+   (let ([zero 17])
+    (double4 zero))
+   ```
+
+   The free variable `zero` in the macro use is in the scope of the
+   variable `zero` in the macro definition and the macro expands to
+   syntactically to
+
+   
+   ```
+   (let ([zero 17])
+    (let* ([zero 0]
+           [x zero])
+      (+ x x zero)))
+   ```
+   
+   giving us the result `0` instead of `34`
+   
+   This is resolved by racket by rewriting the definition with
+   variables that are fresh and do not conflict with the varaibles in
+   the program.
+   
+2. The second part to hygiene is when a free varible in the definition
+   of the macro is in the scope of a local varible in the macro use.
+   
+   ```
+   (define-syntax double3
+     (syntax-rules ()
+       [(double3 e)
+         (let ([x e])
+           (+ x x))]))
+
+   (let ([+ *])
+     (double3 17))
+   ```
+
+   Here, the free variable `+` in the macro definition is in the scope
+   of the variable `+` in the macro use. 
+
+   The syntactic expansion results in
+   
+   ```
+   (let ([+ *])
+    (let ([x 17])
+      (+ x x)))
+   ```
+   
+   producing `17*17` instead of `34` which is not desired.
+   
+   This is tackled by racket by ensuring that free variables in the
+   macro definition always refer to the environment within the macro
+   definition.
+   
+   
+   
+   
+   
+   
+   
+   
+
+
+
 
 
 
