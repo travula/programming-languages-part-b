@@ -73,7 +73,7 @@
                        (cond [(not (vector? vec)) #f]
                              [(= ref (vector-length vec)) #f]
                              [(not (pair? (vector-ref vec ref))) (helper (+ 1 ref))]
-                             [(= v (car (vector-ref vec ref))) (vector-ref vec ref)]
+                             [(equal? v (car (vector-ref vec ref))) (vector-ref vec ref)]
                              [#t (helper (+ 1 ref))]))])
       (helper 0))))
 
@@ -84,18 +84,30 @@
              [vec (make-vector n)]
              [pos 0]
              [f (λ (v)
-                  (if (vector-assoc v vec)
-                      (begin
-          ;              (print "vassoc")
-                        (vector-assoc v vec))
-                      (if (assoc v xs)
-                          (begin
-           ;                 (print "assoc")
-                            (insert-record (assoc v xs))
-                            (set! pos (+ 1 pos))
-                            (if (= pos (vector-length vec))
-                                (set! pos 0)
-                                #f)
-                            (assoc v xs))
-                          #f)))])
+                  (if (number? n)
+                      (let* ([cached-result (vector-assoc v vec)])
+                        (if cached-result
+                            (begin
+                              (print "vassoc")
+                              cached-result)
+                            (let* ([register-result (assoc v xs)])
+                              (if register-result
+                                  (begin
+                                    (print "assoc")
+                                    (insert-record register-result)
+                                    (set! pos (remainder (+ 1 pos) n))
+                                    register-result)
+                                  #f))))
+                      #f))])
       f)))
+
+(define-syntax while-less
+  (syntax-rules (do)
+    [(while-less e1 do e2)
+     (letrec ([e1-val e1]
+              [loop (λ ()
+                      (let ([e2-val e2])
+                        (if (< e2-val e1-val)
+                            (loop)
+                            #t)))])
+       (loop))]))
