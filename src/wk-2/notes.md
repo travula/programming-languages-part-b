@@ -30,3 +30,12 @@ In a dynamically typed language, these are to built by the programmer.
 - Perform some operation on it
 - Make an expression for the result
 
+## How to get a the functionality of a datatype binding
+
+- The constructor creates a list, with the first element
+  being the symbol(string) representing the type and the
+  value in the rest of the list.
+- The checkers then work on this construction, extract the
+  first element of the list and compare the first element. 
+- The extrators retrieve the from the rest of the list.
+
