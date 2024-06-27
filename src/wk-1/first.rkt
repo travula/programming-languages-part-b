@@ -1,7 +1,8 @@
 #lang racket
 
+
 (define (extract str)
-    (substring str 4 7))
+  (substring str 4 7))
 
 (define (echos str) str)
 
@@ -63,6 +64,11 @@
       (if (= y 0)
           1
           (* x ((cpow x) (- y 1)))))))
+
+(define ((ccpow x) y)
+  (if (= y 0)
+      1
+      (* x ((ccpow x) (- y 1)))))
 
 (define map
   (λ (f xs)
@@ -275,3 +281,15 @@
                  [y x])
              (list x y))))
              
+(define gcd
+  (λ (x y) (if (= x y) x
+               (if (< x y)
+                   (gcd (- y x) x)
+                   (gcd y x)))))
+    
+
+(define new-fact
+  (λ (x)
+    (if (= x 0)
+        1
+        (* x (new-fact (- x 1))))))

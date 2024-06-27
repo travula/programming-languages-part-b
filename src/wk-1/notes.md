@@ -164,7 +164,7 @@ functions, called `thunks`.
  to do with the event and when to stop.
  
  
-# let, let* and letrc
+# let, let* and letrec
 
 In `let` the previous binding is not available to the evaluation of
 the expressions in the later bindings.  Each of the expressions
@@ -192,12 +192,12 @@ environment for expressions from e3 till en etc.
 Both in let and let*, the later bindings are not availble in the
 environment of the previous expressions.
 
-Also, in `let*`we can multiple bindings on the same variable and the
-last binding takes effect, while on the other hand such multiple
-binding to a sigle variable is not allowed in `let`
+Also, in `let*` we can have multiple bindings on the same variable
+and the last binding takes effect, while on the other hand such
+multiple binding to a sigle variable is not allowed in `let`
 
 ```
-;;; This iw wrong
+;;; This is wrong
 (let ([hd 0]
       [hd 1])
   hd)

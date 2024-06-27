@@ -1,3 +1,4 @@
+
 #lang racket
 
 
@@ -12,3 +13,10 @@
 
 (cons (mod-5-negate 10) 11)
 
+
+(define factorial
+  (λ (n)
+    (if (= n 1)
+        1
+        (* n (factorial (- n 1))))))
+        

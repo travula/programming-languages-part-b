@@ -37,5 +37,36 @@ In a dynamically typed language, these are to built by the programmer.
   value in the rest of the list.
 - The checkers then work on this construction, extract the
   first element of the list and compare the first element. 
-- The extrators retrieve the from the rest of the list.
+- The extrators retrieve from the rest of the list.
 
+## Interpreters and Compilers
+- An interpreter in language A takes a program in language B and
+  produces answer.
+- A compiler in language A takes a program in language B and produces
+  equivalent program in a language Z and then uses pre-existing
+  implementation of C to produce an answer.
+- Interpreted vs compiler is a feature of particular
+  programming-language implementation. It is not a feature of the
+  programming language. 
+  
+
+
+# Homework
+
+## fun
+- (fun nameopt argument body), where 
+   - nameopt is the name of the function represented by racket string
+   - argument is  also a racket  and is the argument's name
+   - body is the body of the function
+   - fun gets evaluates to a closure
+
+## closure
+- (closure env fun), where
+  - env is a racket list 
+  - fun is MUPL function
+  - closure is an argument to `call`
+
+## call
+- (call e1 e2), where
+  - e1 is closure
+  - e2 evaluates the value
