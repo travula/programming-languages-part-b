@@ -4,6 +4,8 @@ title:  Programming Part B
 author: Thirumal
 ---
 
+# Certificate
+[certificate](./src/grade.pdf)
 
 # Notes for Part 2 of Programming Languages
 
